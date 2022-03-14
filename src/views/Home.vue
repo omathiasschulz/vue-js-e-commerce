@@ -5,6 +5,7 @@
         v-for="(product, index) in this.products"
         :key="index"
         class="product"
+        :class="{ inBag: isInBag(product) }"
       >
         <div
           class="product-image"
@@ -12,8 +13,16 @@
         ></div>
         <h4>{{ product.title }}</h4>
         <p class="price">R$ {{ product.price.toFixed(2) }}</p>
-        <button v-if="!isInBag(product)" @click="addToBag(product)">Adicionar ao carrinho</button>
-        <button v-else class="remove">Remover ao carrinho</button>
+        <button v-if="!isInBag(product)" @click="addToBag(product)">
+          Adicionar ao carrinho
+        </button>
+        <button
+          v-else
+          class="remove"
+          @click="this.$store.dispatch('removeFromBag', product.id)"
+        >
+          Remover ao carrinho
+        </button>
       </div>
     </div>
   </div>
@@ -37,10 +46,12 @@ export default {
   methods: {
     addToBag(product) {
       product.quantity = 1;
-      this.$store.dispatch('addToBag', product);
+      this.$store.dispatch("addToBag", product);
     },
     isInBag(selectedProduct) {
-      return this.productsInBag.find(product => product.id === selectedProduct.id);
+      return this.productsInBag.find(
+        (product) => product.id === selectedProduct.id
+      );
     },
   },
 };

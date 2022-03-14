@@ -22,6 +22,14 @@ export default createStore({
     addToBag(state, product) {
       state.productsInBag.push(product);
     },
+    /**
+     * Mutação que remove o produto ao carinho
+     */
+    removeFromBag(state, productId) {
+      state.productsInBag = state.productsInBag.filter(
+        product => product.id !== productId
+      );
+    },
   },
   actions: {
     /**
@@ -39,7 +47,13 @@ export default createStore({
      */
     addToBag({ commit }, product) {
       commit('addToBag', product);
-    }
+    },
+    /**
+     * Action que remove um produto do carinho
+     */
+    removeFromBag({ commit }, productId) {
+      commit('removeFromBag', productId);
+    },
   },
   modules: {
   },
