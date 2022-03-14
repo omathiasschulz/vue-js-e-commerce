@@ -9,6 +9,7 @@ export default createStore({
   },
   getters: {
   },
+  // mutações realizam operações com a API
   mutations: {
     /**
      * Mutação que salva os produtos
@@ -17,10 +18,17 @@ export default createStore({
       state.products = products;
     },
     /**
+     * Mutação que busca na local storage os produtos do carrinho
+     */
+    loadBag(state, products) {
+      state.productsInBag = products;
+    },
+    /**
      * Mutação que adiciona o produto ao carinho
      */
     addToBag(state, product) {
       state.productsInBag.push(product);
+      localStorage.setItem('productsInBag', JSON.stringify(state.productsInBag));
     },
     /**
      * Mutação que remove o produto ao carinho
@@ -29,8 +37,11 @@ export default createStore({
       state.productsInBag = state.productsInBag.filter(
         product => product.id !== productId
       );
+      localStorage.setItem('productsInBag', JSON.stringify(state.productsInBag));
     },
   },
+  // actions são métodos chamados na aplicação que redirencionam
+  // para a respectiva mutação
   actions: {
     /**
      * Action que carrega os produtos a partir da API
@@ -41,6 +52,14 @@ export default createStore({
           // chama a mutação loadProducts que realiza o save dos produtos
           commit('loadProducts', response.data);
         });
+    },
+    /**
+     * Action que carrega o carrinho de compra a partir do local storage
+     */
+    loadBag({ commit }) {
+      if (localStorage.getItem('productsInBag')) {
+        commit('loadBag', JSON.parse(localStorage.getItem('productsInBag')));
+      }
     },
     /**
      * Action que adiciona um produto no carinho
