@@ -16,6 +16,10 @@ Rodar a aplicação no modo de desenvolvimento
 yarn serve
 ```
 
+## API
+
+A API utilizada nesta aplicação é a [Fake Store API](https://fakestoreapi.com/).
+
 ## Configurações
 
 Instalando o Vue CLI de forma global na máquina caso ainda não exista:

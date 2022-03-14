@@ -43,9 +43,13 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   data() {
-    return {};
+    return {}
   },
-  methods: {},
+  computed: {
+    products() {
+      return this.$store.state.products;
+    },
+  },
 };
 </script>
 
