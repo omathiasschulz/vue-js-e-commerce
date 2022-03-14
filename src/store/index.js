@@ -52,7 +52,9 @@ export default createStore({
      * Action que remove um produto do carinho
      */
     removeFromBag({ commit }, productId) {
-      commit('removeFromBag', productId);
+      if (confirm('Tem certeza que você deseja remover o produto do carrinho?')) {
+        commit('removeFromBag', productId);
+      }
     },
   },
   modules: {
