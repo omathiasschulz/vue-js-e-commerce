@@ -5,18 +5,22 @@ export default createStore({
   // dados da aplicação
   state: {
     products: [],
+    productsInBag: [],
   },
   getters: {
   },
   mutations: {
     /**
      * Mutação que salva os produtos
-     *
-     * @param {*} state
-     * @param {*} products
      */
     loadProducts(state, products) {
       state.products = products;
+    },
+    /**
+     * Mutação que adiciona o produto ao carinho
+     */
+    addToBag(state, product) {
+      state.productsInBag.push(product);
     },
   },
   actions: {
@@ -30,6 +34,12 @@ export default createStore({
           commit('loadProducts', response.data);
         });
     },
+    /**
+     * Action que adiciona um produto no carinho
+     */
+    addToBag({ commit }, product) {
+      commit('addToBag', product);
+    }
   },
   modules: {
   },
