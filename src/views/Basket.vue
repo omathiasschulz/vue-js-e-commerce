@@ -33,12 +33,12 @@
             </span>
           </div>
         </div>
+
+        <div class="grand-total">Total do pedido: R$ {{ total() }}</div>
       </template>
       <template v-else>
         <h4>Nenhum produto no carrinho!</h4>
       </template>
-
-      <div class="grand-total">Total do pedido: R$ 22.30</div>
     </div>
   </div>
 </template>
@@ -49,7 +49,13 @@ import { mapState } from "vuex";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Basket",
-  methods: {},
+  methods: {
+    total() {
+      return this.productsInBag.reduce((acc, product) => {
+        return acc + (product.price * product.quantity);
+      }, 0).toFixed(2);
+    }
+  },
   computed: mapState(["productsInBag"]),
 };
 </script>
